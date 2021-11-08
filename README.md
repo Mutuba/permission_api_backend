@@ -1,4 +1,56 @@
 
+
+Requirements
+This application uses Python version 3.7.7. To install, use brew prefferably or pyenv
+Brew
+
+brew install python
+
+Pyenv
+
+fFirst make sure Pyenv packeage is installed
+brew install pyenv
+
+Add pyenv initializer to shell startup script
+echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+
+Reload your profile
+source ~/.bash_profile
+
+Usage
+pyenv install replacing with 3.7.7 preferrably
+
+Set global python version
+pyenv global 3.7.2
+
+set version for local directory
+pyenv local
+
+Install project dependancies using pip3. Make sure it is installed by typing pip3 --version in the terminal
+
+Type the command below to install dependancies form requirements.txt file
+
+pip3 install -r requirements.txt
+
+Settting up local server to use Aouth2 Provider used for Authentication
+First run the below command to prepare migrations for all applications available
+
+python3 maanage.py makemigrations
+
+Then type the below command to commit migrations
+
+python3 manage.py migrate
+
+Next, on your terminal create a superuser with command below;
+
+python3 manage.py createsuperuser
+
+Run the API locally by:
+
+`python manage.py runserver`
+
+Find API docs here `{your-local-host}/swagger/`
+
 Permissions API - A DRF API to showcase use of custom permissions and roles
 =======
 

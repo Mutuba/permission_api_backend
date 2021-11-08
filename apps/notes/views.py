@@ -126,31 +126,21 @@ class NoteViewSet(
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # def destroy(self, request, slug):
+    def destroy(self, request, pk=None):
+        try:
+           note = self.queryset.get(id=pk)
 
-    #     """Method deletes a single article
-    #     Takes a slug as unique identifier, searches the db
-    #     and deletes an article with matching slug.
-    #     Returns NotFound if an article does not exist"""
+        except Note.DoesNotExist:
+            raise NotFound("An note with this slug does not exist.")
 
-    #     serializer_context = {"request": request}
+        if request.user != note.author:
+            return Response(
+                {"message": "You can only delete your note"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
 
-    #     try:
-    #         serializer_instance = self.queryset.get(slug=slug)
-
-    #     except Article.DoesNotExist:
-    #         raise NotFound("An article with this slug does not exist.")
-
-    #     article = Article.objects.get(slug=slug)
-
-    #     if request.user != article.author:
-    #         return Response(
-    #             {"message": "You can only delete your article"},
-    #             status=status.HTTP_401_UNAUTHORIZED,
-    #         )
-
-    #     if article.delete():
-    #         return Response(
-    #             {"message": "You have successfully deleted the article"},
-    #             status=status.HTTP_200_OK,
-    #         )
+        if note.delete():
+            return Response(
+                {"message": "You have successfully deleted the note"},
+                status=status.HTTP_200_OK,
+            )

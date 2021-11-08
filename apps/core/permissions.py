@@ -9,4 +9,4 @@ class UserHasPermission(permissions.BasePermission):
         permissions = request.user.permissions
         if self.permission in permissions:
             return True
-        return True
+        return False
